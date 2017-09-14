@@ -1,9 +1,3 @@
-/*
- * Copyright © 2014-2016 Lightbend, Inc. All rights reserved.
- * No information contained herein may be reproduced or transmitted in any form
- * or by any means without the express written permission of Lightbend, Inc.
- */
-
 package com.lightbend.scalanative.curl
 
 import scala.scalanative.native
@@ -12,8 +6,37 @@ import scala.scalanative.native
 @native.extern
 object libcurl {
   type CURL = native.Ptr[Unit]
+  type CURLcode = native.Ptr[Unit]
 
   def curl_easy_init(): CURL = native.extern
+
+  /*
+   These 2 lines is supposed to represent the following inside curl/curl.h
+
+   #define CINIT(na,t,nu) CURLOPT_ ## na = CURLOPTTYPE_ ## t + nu
+
+   typedef enum {
+     /* The full URL to get/put */
+     CINIT(URL, STRINGPOINT, 2),
+
+     // more enum declarations (like 260+ enums) not shown
+   } CURLoption;
+
+   Related?: https://github.com/scala-native/scala-native/issues/205
+
+   */
+  class CURLoption(key: native.CString, expectedInputType: native.CString, value: native.CLong)
+  val CURLOPT_URL: CURLoption = native.extern
+
+  /*
+   How do we represent this method, particularly the parameter which can be a long, function pointer, object pointer, or curl_off_t?
+
+   From https://curl.haxx.se/libcurl/c/curl_easy_setopt.html
+
+   All options are set with an option followed by a parameter. That parameter can be a long, a function pointer, an object pointer or a curl_off_t, depending on what the specific option expects.
+   */
+  def curl_easy_setopt(curl: CURL, curlOption: CURLoption, parameter: native.Ptr[_]): CURLcode = native.extern
+
   def curl_easy_cleanup(curl: CURL): Unit = native.extern
 
 }
