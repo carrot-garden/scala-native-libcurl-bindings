@@ -8,8 +8,6 @@ scalaVersion := "2.11.11"
 
 enablePlugins(ScalaNativePlugin, AutomateHeaderPlugin)
 
-// Disable GC since the CLI is a short-lived process.
-nativeGC := "none"
 
 libraryDependencies ++= List(
   "com.lihaoyi"       %%% "utest"    % "0.4.8" % "test"
