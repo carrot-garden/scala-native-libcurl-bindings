@@ -11,21 +11,15 @@ object Main {
 
   def main(args: Array[String]): Unit = {
 
-    //    println("curl_global_init")
-    //    libcurl.curl_global_init(libcurl.CURL_GLOBAL_DEFAULT)
-
     println("curl_easy_init")
     val curl = libcurl.curl_easy_init()
 
-    println(s"curl: ${curl}")
-    //
-    //    if (curl != null) {
-    //      println(s"got curl object ${curl}")
-    //
-    //      println("curl_easy_cleanup")
-    //      libcurl.curl_easy_cleanup(curl)
-    //
-    //    }
+    if (curl != null) {
+      println("got curl handle")
+
+      println("curl_easy_cleanup")
+      libcurl.curl_easy_cleanup(curl)
+    }
     println("done")
 
   }
