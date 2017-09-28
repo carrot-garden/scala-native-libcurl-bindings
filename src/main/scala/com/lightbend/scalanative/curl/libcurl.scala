@@ -1,6 +1,7 @@
 package com.lightbend.scalanative.curl
 
 import scala.scalanative.native
+import scala.scalanative.native._
 
 @native.link("curl")
 @native.extern
@@ -25,7 +26,7 @@ object libcurl {
    Related?: https://github.com/scala-native/scala-native/issues/205
 
    */
-  class CURLoption(key: native.CString, expectedInputType: native.CString, value: native.CLong)
+  class CURLoption(val value: native.CInt) extends AnyVal
   val CURLOPT_URL: CURLoption = native.extern
 
   /*
