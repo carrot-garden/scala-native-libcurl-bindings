@@ -14,17 +14,16 @@ object Main {
     println("curl_easy_init")
     val curl = libcurl.curl_easy_init()
 
-    if (curl != null) {
-      println("got curl handle")
+    println("set URL")
 
-      libcurl.curl_easy_setopt(curl, libcurl.CURLOPT_URL, c"http://www.example.org")
+    libcurl.curl_easy_setopt(curl, libcurl.CURLOPT_URL, c"http://www.example.org")
 
-      // TODO: curl_easy_perform
-      // TODO: extract response code & entity body (as text to begin with)?
+    // TODO: curl_easy_perform
+    // TODO: extract response code & entity body (as text to begin with)?
 
-      println("curl_easy_cleanup")
-      libcurl.curl_easy_cleanup(curl)
-    }
+    println("curl_easy_cleanup")
+    libcurl.curl_easy_cleanup(curl)
+
     println("done")
 
   }
